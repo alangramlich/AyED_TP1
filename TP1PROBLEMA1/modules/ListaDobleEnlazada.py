@@ -26,7 +26,6 @@ class ListaDobleEnlazada:
     
     
     
-    
         #PASOS : creo el nodo 
         #desp enlazo el ahora segundo al nuevo primero 
         #enlazo el nuevo al inicio 
@@ -92,7 +91,9 @@ class ListaDobleEnlazada:
             aux=self.primero
             aux.siguiente.anterior=None
             retornar=aux
-        elif 0<posicion<self.tamanio:
+            self.primero=self.primero.siguiente
+            self.tamanio=self.tamanio-1
+        elif 0<posicion<self.tamanio-1:
             actual = self.primero
             for i in range(posicion):
                 actual = actual.siguiente
@@ -100,6 +101,11 @@ class ListaDobleEnlazada:
             actual.anterior.siguiente=actual.siguiente
             actual.siguiente.anterior=actual.anterior
             retornar=actual
+            self.tamanio=self.tamanio-1
+        elif posicion == self.tamanio-1:
+            retornar=self.ultimo
+            self.ultimo.anterior.siguiente=None;
+            self.ultimo=self.ultimo.anterior;
             self.tamanio=self.tamanio-1
         return retornar
                 
@@ -112,6 +118,7 @@ class ListaDobleEnlazada:
             actual=actual.siguiente
         copia.agregar_al_final(actual.dato)
         return copia
+    #return self ESTO ME RETORNA LA MISMA LISTA Y SI MODIFICO LA NEUVA ASIGNACION SE MODIFICA ESTA TAMBIEN 
             
     
         
@@ -142,23 +149,43 @@ class ListaDobleEnlazada:
         self.ultimo=self.primero
         self.primero=aux
         
-    def ordenar(self):
-        if self.tamanio<2:
-            return
-        actual = self.primero
-        while actual is not None:
-            aux = actual.siguiente
-            while aux is not None:
-                if aux.dato < actual.dato:
-                    aux1=actual.dato
-                    actual.dato = aux.dato
-                    aux.dato=aux1
-                    aux = aux.siguiente
-                else:
-                    aux=aux.siguiente
+    # def ordenar(self):
+    #     if self.tamanio<2:
+    #         return
+    #     actual = self.primero
+    #     while actual is not None:
+    #         aux = actual.siguiente
+    #         while aux is not None:
+    #             if aux.dato < actual.dato:
+    #                 aux1=actual.dato
+    #                 actual.dato = aux.dato
+    #                 aux.dato=aux1
+    #                 aux = aux.siguiente
+    #             else:
+    #                 aux=aux.siguiente
                 
-            actual=actual.siguiente
-        
+    #         actual=actual.siguiente
+    
+    def ordenar(self):    #ACA CREO QUE LO HICE POR INSERCION
+        for i in range(self.tamanio-1):
+            aux=self.extraer(i)
+            j=0
+            nodo=self.primero
+            while j<=i:
+                if(aux.dato<nodo.dato):
+                    self.insertar(aux.dato,j)
+                    j=i+1
+                elif j==i:
+                    self.insertar(aux.dato,j)
+                    j+=1
+                else:
+                    nodo=nodo.siguiente
+                    j+=1
+                    
+                        
+                    
+                        
+                
         
     def concatenar(self,Lista):
         #PREGUNTA: ESTO FUNCIONA??
@@ -181,7 +208,25 @@ class ListaDobleEnlazada:
 
   #ListaSuma = MiLista1 + MiLista2
 
-    def __add__(self, otro):
+    def __add__(self, otro): #SOBRECARGA EL +
         return self.concatenar(otro)
 
+    def __str__(self):
+       linea="None "
+       for i in self:
+           #linea=linea+print(dato) ESTO NO ANDA PORQUE PRINT NO ME DEVUELVE UN STRING
+           #PRINT SOLO MUESTRA POR PANTALLA Y DEVUELVE NONETYPE
+           linea=linea+str(i.dato)+" "
+       linea=linea+"None"
+       return linea
 
+
+    def __iter__(self):
+        actual=self.primero
+        while actual is not None: 
+            yield actual
+            actual=actual.siguiente
+        
+        
+    def __len__(self):
+        return self.tamanio

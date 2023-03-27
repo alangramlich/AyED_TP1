@@ -22,3 +22,7 @@ class Nodo:
 
     def asignarSiguiente(self,nuevosiguiente):
         self.siguiente = nuevosiguiente
+        
+    def __str__(self):
+        linea=str(self.dato)
+        return linea

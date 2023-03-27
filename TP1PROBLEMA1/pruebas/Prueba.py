@@ -14,38 +14,42 @@ lista.agregar_al_final(3)
 lista.agregar_al_final(4)
 lista.agregar_al_final(5)
 lista.agregar_al_final(6)
+print(lista)
 
+print(f"Longitud: {len(lista)}")
+
+#----------------------PRUEBA DE CONCATENAR
+print("PRUEBA DE CONCATENAR: ")
 lista2=ListaDobleEnlazada()
-
+lista2.agregar_al_final(7)
+lista2.agregar_al_final(8)
+lista2.agregar_al_final(9)
 lista3=lista+lista2
-#lista.insertar(10,0)
-#print(lista.extraer(3).dato)
-#lista.invertir()
-
-print("None")
-actual=lista3.primero
-for i in range(lista3.tamanio):
-    print(actual.dato)
-    actual=actual.siguiente
-print("None")
-
-# lista.ordenar()
-
-# print("None")
-# actual=lista.primero
-# for i in range(lista.tamanio):
-#     print(actual.dato)
-#     actual=actual.siguiente
-# print("None")
+print(lista3)
 
 
-# print("None")
-# lista2=lista.copiar()
+print("PRUEBA DE INSERTAR: ")
+lista.insertar(10,3)
+print(lista)
 
-# actual2=lista2.primero
-# print("None")
-# print(lista2.tamanio)
-# for i in range(lista2.tamanio):
-#     print(actual2.dato)
-#     actual2=actual2.siguiente
-# print("None")
+print("PRUEBA DE EXTRAER: ")
+lista.extraer(6)
+print(lista)
+
+print("PRUEBA DE INVERTIR: ")
+lista.invertir()
+print(lista)
+
+
+print("PRUEBA DE ORDENAR: ")
+lista_ord=ListaDobleEnlazada()
+lista_ord.agregar_al_inicio(5)
+lista_ord.agregar_al_inicio(0)
+lista_ord.agregar_al_inicio(3)
+lista_ord.agregar_al_inicio(2)
+lista_ord.agregar_al_inicio(4)
+lista_ord.agregar_al_inicio(1)
+print("Lista original: ")
+print(lista_ord)
+lista_ord.ordenar()
+print(lista_ord)
