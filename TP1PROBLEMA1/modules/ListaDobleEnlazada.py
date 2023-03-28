@@ -15,8 +15,8 @@ from modules.Nodo import Nodo
 
 class ListaDobleEnlazada:
     def __init__(self):
-        self.primero = None
-        self.ultimo = None
+        self.cabeza = None
+        self.cola = None
         self.tamanio = 0
     def esta_vacia(self):
         return self.tamanio == 0
@@ -27,28 +27,28 @@ class ListaDobleEnlazada:
     
     
         #PASOS : creo el nodo 
-        #desp enlazo el ahora segundo al nuevo primero 
+        #desp enlazo el ahora segundo al nuevo cabeza 
         #enlazo el nuevo al inicio 
     def agregar_al_inicio(self, dato):
-        nuevo = Nodo(dato, self.primero, None)
-        if self.primero != None:
-            self.primero.anterior = nuevo
+        nuevo = Nodo(dato, self.cabeza, None)
+        if self.cabeza != None:
+            self.cabeza.anterior = nuevo
         else:
-            self.ultimo = nuevo
-        self.primero = nuevo
+            self.cola = nuevo
+        self.cabeza = nuevo
         self.tamanio += 1
         
 
 
         
     def agregar_al_final(self, dato):
-        nuevo = Nodo(dato, None, self.ultimo)
-        if self.ultimo != None:
-            self.ultimo.siguiente = nuevo
+        nuevo = Nodo(dato, None, self.cola)
+        if self.cola != None:
+            self.cola.siguiente = nuevo
         else:
-            self.primero = nuevo
+            self.cabeza = nuevo
             
-        self.ultimo = nuevo
+        self.cola = nuevo
         self.tamanio += 1
         
         
@@ -57,7 +57,7 @@ class ListaDobleEnlazada:
     #PASOS:
         #1: me fijo que vaya al inicio o al final.
         #2: me fijo q este en el rango
-        #3: tengo que ir desde el primero a la posicion 
+        #3: tengo que ir desde el cabeza a la posicion 
         #4: YA TENGO LA POSICION. Ahora creo el nuevo nodo y lo enlazo
         #COMO LO ENLAZO: 
         
@@ -67,7 +67,7 @@ class ListaDobleEnlazada:
         elif posicion == 0:
             self.agregar_al_inicio(dato)
         elif 0<posicion<self.tamanio:
-            actual = self.primero
+            actual = self.cabeza
             for i in range(posicion):
                 actual = actual.siguiente
             nuevo = Nodo(dato, actual, actual.anterior)
@@ -83,51 +83,75 @@ class ListaDobleEnlazada:
     #hacia adelante y hacia atras
     def extraer(self, posicion=None):
         if posicion == None:
-            retornar=self.ultimo
-            self.ultimo.anterior.siguiente=None;
-            self.ultimo=self.ultimo.anterior;
-            self.tamanio=self.tamanio-1
+            retornar=self.cola.dato
+            self.cola=self.cola.anterior;
+            self.cola.siguiente=None;
+            
+        elif posicion >= self.tamanio:
+            retornar=None
+        elif posicion < 0:
+            if -posicion<self.tamanio-1 and posicion != -1:
+                aux=self.cola
+                for i in range(-posicion-1):
+                    aux=aux.anterior
+                retornar=aux.dato
+                aux.anterior.siguiente=aux.siguiente
+                aux.siguiente.anterior=aux.anterior
+            elif -posicion==self.tamanio-1:
+                retornar=self.cabeza.dato
+                self.cabeza.siguiente.anterior=None
+                self.cabeza=self.cabeza.siguiente
+            elif -posicion == 1:
+                retornar=self.cola.dato
+                self.cola.anterior.siguiente=None
+                self.cola=self.cola.anterior
+                
+            else:
+                retornar=None
+        
+            
         elif posicion == 0:
-            aux=self.primero
-            aux.siguiente.anterior=None
-            retornar=aux
-            self.primero=self.primero.siguiente
-            self.tamanio=self.tamanio-1
+            aux=self.cabeza
+            self.cabeza.siguiente.anterior=None
+            self.cabeza=self.cabeza.siguiente
+            retornar=aux.dato
         elif 0<posicion<self.tamanio-1:
-            actual = self.primero
+            actual = self.cabeza
             for i in range(posicion):
                 actual = actual.siguiente
             
             actual.anterior.siguiente=actual.siguiente
             actual.siguiente.anterior=actual.anterior
-            retornar=actual
-            self.tamanio=self.tamanio-1
+            retornar=actual.dato
         elif posicion == self.tamanio-1:
-            retornar=self.ultimo
-            self.ultimo.anterior.siguiente=None;
-            self.ultimo=self.ultimo.anterior;
+            retornar=self.cola.dato
+            self.cola=self.cola.anterior;
+            self.cola.siguiente=None;
+        if retornar != None:
             self.tamanio=self.tamanio-1
         return retornar
                 
         
     def copiar(self):
         copia=ListaDobleEnlazada()
-        actual=self.primero
+        actual=self.cabeza
+        if actual == None:
+            return copia
         while actual.siguiente != None:
             copia.agregar_al_final(actual.dato)
             actual=actual.siguiente
         copia.agregar_al_final(actual.dato)
         return copia
-    #return self ESTO ME RETORNA LA MISMA LISTA Y SI MODIFICO LA NEUVA ASIGNACION SE MODIFICA ESTA TAMBIEN 
+    #return self ESTO ME RETORNA LA MISMA LISTA Y SI MODIFICO LA NUEVA ASIGNACION SE MODIFICA ESTA TAMBIEN 
             
     
         
         
         
     def invertir(self):
-        aux0=self.primero
-        aux1=self.primero.siguiente
-        aux2=self.primero.siguiente.siguiente
+        aux0=self.cabeza
+        aux1=self.cabeza.siguiente
+        aux2=self.cabeza.siguiente.siguiente
         aux0.siguiente=None
         aux0.anterior=aux1
         aux1.siguiente=aux0
@@ -145,14 +169,14 @@ class ListaDobleEnlazada:
             
         aux1.anterior=None
         aux1.siguiente=aux0
-        aux=self.ultimo
-        self.ultimo=self.primero
-        self.primero=aux
+        aux=self.cola
+        self.cola=self.cabeza
+        self.cabeza=aux
         
     # def ordenar(self):
     #     if self.tamanio<2:
     #         return
-    #     actual = self.primero
+    #     actual = self.cabeza
     #     while actual is not None:
     #         aux = actual.siguiente
     #         while aux is not None:
@@ -167,16 +191,16 @@ class ListaDobleEnlazada:
     #         actual=actual.siguiente
     
     def ordenar(self):    #ACA CREO QUE LO HICE POR INSERCION
-        for i in range(self.tamanio-1):
+        for i in range(self.tamanio):
             aux=self.extraer(i)
             j=0
-            nodo=self.primero
+            nodo=self.cabeza
             while j<=i:
-                if(aux.dato<nodo.dato):
-                    self.insertar(aux.dato,j)
+                if(aux<nodo.dato):
+                    self.insertar(aux,j)
                     j=i+1
                 elif j==i:
-                    self.insertar(aux.dato,j)
+                    self.insertar(aux,j)
                     j+=1
                 else:
                     nodo=nodo.siguiente
@@ -187,44 +211,47 @@ class ListaDobleEnlazada:
                         
                 
         
-    def concatenar(self,Lista):
+    def add(self,Lista):
         #PREGUNTA: ESTO FUNCIONA??
-        #Lista.primero.anterior=self.ultimo
-        #self.ultimo.siguiente=Lista.primero
+        #Lista.cabeza.anterior=self.cola
+        #self.cola.siguiente=Lista.cabeza
         #OPCION 2
         concatenada=ListaDobleEnlazada()
-        aux=self.primero
+        aux=self.cabeza
         while aux != None:
             concatenada.agregar_al_final(aux.dato)
             aux=aux.siguiente
-        aux=Lista.primero
+        aux=Lista.cabeza
         while aux != None:
             concatenada.agregar_al_final(aux.dato)
             aux=aux.siguiente
         return concatenada
 
-
-
+    def concatenar(self,Lista):
+        aux=Lista.cabeza
+        while aux != None:
+            self.agregar_al_final(aux.dato)
+            aux=aux.siguiente
 
   #ListaSuma = MiLista1 + MiLista2
 
     def __add__(self, otro): #SOBRECARGA EL +
-        return self.concatenar(otro)
+        return self.add(otro)
 
     def __str__(self):
        linea="None "
        for i in self:
            #linea=linea+print(dato) ESTO NO ANDA PORQUE PRINT NO ME DEVUELVE UN STRING
            #PRINT SOLO MUESTRA POR PANTALLA Y DEVUELVE NONETYPE
-           linea=linea+str(i.dato)+" "
+           linea=linea+str(i)+" "
        linea=linea+"None"
        return linea
 
 
     def __iter__(self):
-        actual=self.primero
+        actual=self.cabeza
         while actual is not None: 
-            yield actual
+            yield actual.dato
             actual=actual.siguiente
         
         
