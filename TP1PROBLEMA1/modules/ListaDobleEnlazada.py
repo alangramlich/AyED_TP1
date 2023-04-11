@@ -82,13 +82,24 @@ class ListaDobleEnlazada:
     #tengo que posicionarme en el que quiero borrar y desde ahi cambiar los enlaces
     #hacia adelante y hacia atras
     def extraer(self, posicion=None):
+        retornar = None
         if posicion == None:
-            retornar=self.cola.dato
-            self.cola=self.cola.anterior;
-            self.cola.siguiente=None;
-            
-        elif posicion >= self.tamanio:
-            retornar=None
+            print("TAMANIO:")
+            print (self.tamanio)
+            print("LDE:")
+            print(self)
+            if self.tamanio>1:
+                retornar=self.cola.dato
+                self.cola=self.cola.anterior;
+                self.cola.siguiente=None;
+            elif self.tamanio == 1:
+                retornar=self.cola.dato
+                self.cola=None
+                self.cabeza=None
+            # elif self.tamanio == 0:
+            #     reotornar = None
+        # elif posicion >= self.tamanio:
+        #     retornar=None
         elif posicion < 0:
             if -posicion<self.tamanio-1 and posicion != -1:
                 aux=self.cola
@@ -106,8 +117,8 @@ class ListaDobleEnlazada:
                 self.cola.anterior.siguiente=None
                 self.cola=self.cola.anterior
                 
-            else:
-                retornar=None
+            # else:
+            #     retornar=None
         
             
         elif posicion == 0:
@@ -127,7 +138,7 @@ class ListaDobleEnlazada:
             retornar=self.cola.dato
             self.cola=self.cola.anterior;
             self.cola.siguiente=None;
-        if retornar != None:
+        if retornar is not None:
             self.tamanio=self.tamanio-1
         return retornar
                 
