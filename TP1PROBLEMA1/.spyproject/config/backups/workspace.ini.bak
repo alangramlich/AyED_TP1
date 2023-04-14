@@ -8,4 +8,5 @@ recent_files = ['modules\\Nodo.py', 'modules\\ListaDobleEnlazada.py', 'pruebas\\
 
 [main]
 version = 0.2.0
+recent_files = []
 
