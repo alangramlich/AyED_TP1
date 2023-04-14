@@ -84,23 +84,18 @@ class ListaDobleEnlazada:
     def extraer(self, posicion=None):
         retornar = None
         if posicion == None:
-            print("TAMANIO:")
-            print (self.tamanio)
-            print("LDE:")
-            print(self)
+            #ESTO LO USABA PARA PRUEBAS
+            # print("TAMANIO:")   
+            # print (self.tamanio)
+            # print("LDE:")
+            # print(self)
             if self.tamanio>1:
                 retornar=self.cola.dato
                 self.cola=self.cola.anterior;
                 self.cola.siguiente=None;
             elif self.tamanio == 1:
                 retornar=self.cola.dato
-                self.cola=None
-                self.cabeza=None
-            # elif self.tamanio == 0:
-            #     reotornar = None
-        # elif posicion >= self.tamanio:
-        #     retornar=None
-        elif posicion < 0:
+        elif posicion < 0 and self.tamanio > 1:
             if -posicion<self.tamanio-1 and posicion != -1:
                 aux=self.cola
                 for i in range(-posicion-1):
@@ -116,30 +111,33 @@ class ListaDobleEnlazada:
                 retornar=self.cola.dato
                 self.cola.anterior.siguiente=None
                 self.cola=self.cola.anterior
-                
-            # else:
-            #     retornar=None
-        
-            
-        elif posicion == 0:
+        elif posicion < 0 and self.tamanio == 1 and -posicion == 1:
+            retornar=self.cabeza.dato
+        elif posicion == 0 and self.tamanio>1:
             aux=self.cabeza
             self.cabeza.siguiente.anterior=None
             self.cabeza=self.cabeza.siguiente
             retornar=aux.dato
-        elif 0<posicion<self.tamanio-1:
+        elif posicion == 0 and self.tamanio == 1:
+            retornar=self.cabeza.dato
+        elif 0<posicion<self.tamanio-1 and self.tamanio>1:
             actual = self.cabeza
             for i in range(posicion):
                 actual = actual.siguiente
-            
             actual.anterior.siguiente=actual.siguiente
             actual.siguiente.anterior=actual.anterior
             retornar=actual.dato
+        elif (posicion == 1 or posicion == 0) and self.tamanio == 1:
+            retornar=self.cabeza.dato
         elif posicion == self.tamanio-1:
             retornar=self.cola.dato
             self.cola=self.cola.anterior;
             self.cola.siguiente=None;
         if retornar is not None:
             self.tamanio=self.tamanio-1
+            if self.tamanio == 0:
+                self.cola=None
+                self.cabeza=None
         return retornar
                 
         
