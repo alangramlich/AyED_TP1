@@ -94,8 +94,6 @@ class ListaDobleEnlazada:
                 self.cola.siguiente=None;
             elif self.tamanio == 1:
                 retornar=self.cola.dato
-                self.cola=None
-                self.cabeza=None
             # elif self.tamanio == 0:
             #     reotornar = None
         # elif posicion >= self.tamanio:
@@ -140,6 +138,9 @@ class ListaDobleEnlazada:
             self.cola.siguiente=None;
         if retornar is not None:
             self.tamanio=self.tamanio-1
+            if self.tamanio == 0:
+                self.cola=None
+                self.cabeza=None
         return retornar
                 
         
