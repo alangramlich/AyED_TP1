@@ -68,3 +68,9 @@ print("Lista original: ")
 print(lista_ord)
 lista_ord.ordenar()
 print(lista_ord)
+lista_para_vaciar=ListaDobleEnlazada()
+for i in range(5):
+    lista_para_vaciar.agregar_al_final(i)
+for i in range(5):
+    lista_para_vaciar.extraer(0)
+    print(lista_para_vaciar)

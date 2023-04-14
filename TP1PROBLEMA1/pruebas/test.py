@@ -466,7 +466,7 @@ class Test_LDE(unittest.TestCase):
             nodo_original = nodo_original.siguiente
             nodo_concat = nodo_concat.siguiente
 
-    def test_vaciado(self):
+    def test_vaciado_sin_parametro(self):
         """
         Verifico el correcto vaciado de la lista.
         """
@@ -475,6 +475,57 @@ class Test_LDE(unittest.TestCase):
             lista_para_vaciar.agregar_al_final(i)
         for i in range(5):
             lista_para_vaciar.extraer()
+        cabeza=lista_para_vaciar.cabeza
+        cola=lista_para_vaciar.cola
+        self.assertEqual(cabeza, None,
+                         "La cabeza no esta vacia")
+        self.assertEqual(cola, None,
+                         "La cola no esta vacia")
+        self.assertEqual(lista_para_vaciar.esta_vacia(), True,
+                         "El tamaño no es cero.")
+    def test_vaciado_parametro_negativo(self):
+        """
+        Verifico el correcto vaciado de la lista.
+        """
+        lista_para_vaciar=ListaDobleEnlazada()
+        for i in range(5):
+            lista_para_vaciar.agregar_al_final(i)
+        for i in range(5):
+            lista_para_vaciar.extraer(-1)
+        cabeza=lista_para_vaciar.cabeza
+        cola=lista_para_vaciar.cola
+        self.assertEqual(cabeza, None,
+                         "La cabeza no esta vacia")
+        self.assertEqual(cola, None,
+                         "La cola no esta vacia")
+        self.assertEqual(lista_para_vaciar.esta_vacia(), True,
+                         "El tamaño no es cero.")
+    def test_vaciado_parametro_positivo(self):
+        """
+        Verifico el correcto vaciado de la lista.
+        """
+        lista_para_vaciar=ListaDobleEnlazada()
+        for i in range(5):
+            lista_para_vaciar.agregar_al_final(i)
+        for i in range(5):
+            lista_para_vaciar.extraer(1)
+        cabeza=lista_para_vaciar.cabeza
+        cola=lista_para_vaciar.cola
+        self.assertEqual(cabeza, None,
+                         "La cabeza no esta vacia")
+        self.assertEqual(cola, None,
+                         "La cola no esta vacia")
+        self.assertEqual(lista_para_vaciar.esta_vacia(), True,
+                         "El tamaño no es cero.")
+    def test_vaciado_parametro_cero(self):
+        """
+        Verifico el correcto vaciado de la lista.
+        """
+        lista_para_vaciar=ListaDobleEnlazada()
+        for i in range(5):
+            lista_para_vaciar.agregar_al_final(i)
+        for i in range(5):
+            lista_para_vaciar.extraer(0)
         cabeza=lista_para_vaciar.cabeza
         cola=lista_para_vaciar.cola
         self.assertEqual(cabeza, None,
