@@ -13,21 +13,18 @@ from modules.JuegoGuerra import Pila
 # print(carta1)
 # print(carta2)
 
-juego=JuegoGuerra()
+juego=JuegoGuerra(random_seed=314)
 juego.inicializar_mazo()
-aux=Carta('A','♠')
-juego.mazo1.apilar(aux)
-juego.mazo2.apilar(aux)
+
+
 print ("MAZOS INICIALES: ")
 print(juego.mazo1)
 print(juego.mazo2)
 
+juego.iniciar_juego()
 
-for i in range(3000):
-    juego.jugar_1_carta()
-
-
-
+print("Termino")
+print(f"Turnos: {juego.turnos_jugados}")
 
 # print("MAZOS FINALES:")
 # print(juego.mazo1)

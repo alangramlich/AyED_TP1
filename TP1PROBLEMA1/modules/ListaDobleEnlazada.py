@@ -84,11 +84,6 @@ class ListaDobleEnlazada:
     def extraer(self, posicion=None):
         retornar = None
         if posicion == None:
-            #ESTO LO USABA PARA PRUEBAS
-            # print("TAMANIO:")   
-            # print (self.tamanio)
-            # print("LDE:")
-            # print(self)
             if self.tamanio>1:
                 retornar=self.cola.dato
                 self.cola=self.cola.anterior;
