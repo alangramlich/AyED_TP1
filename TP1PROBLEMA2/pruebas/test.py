@@ -64,20 +64,20 @@ class TestJuegoGuerra(unittest.TestCase):
         self.assertEqual(self.juego_6.turnos_jugados, 1373)
         self.assertEqual(self.juego_6.ganador, 'jugador 2')
     
-    # def test_resulta_empate(self):
-    #     """
-    #     compruebo el resultado de 2 partidas con empate
-    #     """
+    def test_resulta_empate(self):
+        """
+        compruebo el resultado de 2 partidas con empate
+        """
 
-    #     # juego empate
-    #     self.juego_7 = JuegoGuerra(random_seed=547)
-    #     self.juego_8 = JuegoGuerra(random_seed=296)
+        # juego empate
+        self.juego_7 = JuegoGuerra(random_seed=547)
+        self.juego_8 = JuegoGuerra(random_seed=296)
 
-    #     self.juego_7.iniciar_juego()
-    #     self.juego_8.iniciar_juego()
+        self.juego_7.iniciar_juego()
+        self.juego_8.iniciar_juego()
         
-    #     self.assertTrue(self.juego_7.empate)
-    #     self.assertTrue(self.juego_8.empate)
+        self.assertTrue(self.juego_7.empate)
+        self.assertTrue(self.juego_8.empate)
     
     
 if __name__ == '__main__':

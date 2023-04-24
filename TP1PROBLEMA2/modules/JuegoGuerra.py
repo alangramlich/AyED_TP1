@@ -213,6 +213,9 @@ class JuegoGuerra:
         self.botin_de_guerra=Pila()
         self.botin_aux=Pila()
         self.ganador=None
+        self.memoria_jug_1_guerra = []
+        self.memoria_jug_2_guerra = []
+        self.memoria_x = ""
         
         
     def iniciar_juego(self):
@@ -222,25 +225,26 @@ class JuegoGuerra:
         
         
     def sacar_cartas(self):
+        
         if self.mazo1.esta_vacia() and self.botin1.esta_vacia():
             self.ganador="jugador 2"
-            print("HAY GANADOR: JUGADOR 2")
-            print(f"Mazo1: {self.mazo1}")
-            print(f"Botin1: {self.botin1}")
-            print(f"Mazo2: {self.mazo2}")
-            print(f"Botin2: {self.botin2}")
+            # print("HAY GANADOR: JUGADOR 2")
+            # print(f"Mazo1: {self.mazo1}")
+            # print(f"Botin1: {self.botin1}")
+            # print(f"Mazo2: {self.mazo2}")
+            # print(f"Botin2: {self.botin2}")
         elif self.mazo2.esta_vacia() and self.botin2.esta_vacia():
             self.ganador="jugador 1"
-            print(f"TAMANIO: {self.mazo2.tamanio()}")
-            print("HAY GANADOR: JUGADOR 1")
-            print(f"Turnos: {self.turnos_jugados}")
-            print(f"Mazo1: {self.mazo1}")
-            print(f"Botin1: {self.botin1}")
-            print(f"Mazo2: {self.mazo2}")
-            print(f"Botin2: {self.botin2}")
-            print(f"Tamanio mazo2: {self.mazo2.tamanio()}")
-            print(f"Tamanio mazo1: {self.mazo1.tamanio()}")
-            print(f"{self.mazo2.esta_vacia()}")
+            # print(f"TAMANIO: {self.mazo2.tamanio()}")
+            # print("HAY GANADOR: JUGADOR 1")
+            # print(f"Turnos: {self.turnos_jugados}")
+            # print(f"Mazo1: {self.mazo1}")
+            # print(f"Botin1: {self.botin1}")
+            # print(f"Mazo2: {self.mazo2}")
+            # print(f"Botin2: {self.botin2}")
+            # print(f"Tamanio mazo2: {self.mazo2.tamanio()}")
+            # print(f"Tamanio mazo1: {self.mazo1.tamanio()}")
+            # print(f"{self.mazo2.esta_vacia()}")
         if self.mazo1.esta_vacia() and not self.botin1.esta_vacia():
             for i in range(self.botin1.tamanio()):
                 self.mazo1.apilar(self.botin1.desapilar())
@@ -258,7 +262,8 @@ class JuegoGuerra:
         
         
     def guerra(self,carta_inicial_1, carta_inicial_2):
-        print("Hay guerra")
+        # print("Hay guerra")
+        self.mostrar_guerra(carta_inicial_1, carta_inicial_2)
         self.botin_de_guerra.apilar(carta_inicial_1)
         self.botin_de_guerra.apilar(carta_inicial_2)
         for i in range(3):
@@ -267,6 +272,7 @@ class JuegoGuerra:
             self.botin_de_guerra.apilar(carta_jug_2)
         [carta_jug_1, carta_jug_2]=self.sacar_cartas()
         if (carta_jug_1 > carta_jug_2):
+            self.limpiar_memoria_guerra()
             self.botin_de_guerra.apilar(carta_jug_1)
             self.botin_de_guerra.apilar(carta_jug_2)
             while self.botin_de_guerra.esta_vacia() is not True:
@@ -274,6 +280,7 @@ class JuegoGuerra:
             while self.botin_aux.esta_vacia() is not True:
                 self.botin1.apilar(self.botin_aux.desapilar())
         if (carta_jug_2 > carta_jug_1):
+            self.limpiar_memoria_guerra()
             self.botin_de_guerra.apilar(carta_jug_1)
             self.botin_de_guerra.apilar(carta_jug_2)
             while self.botin_de_guerra.esta_vacia() is not True:
@@ -284,17 +291,21 @@ class JuegoGuerra:
             self.guerra(carta_jug_1, carta_jug_2)
         
         
-        
+    def limpiar_memoria_guerra(self):
+        self.memoria_jug_1_guerra.clear()
+        self.memoria_jug_2_guerra.clear()
+        self.memoria_x=""
         
     def jugar_1_carta(self):
         
-        print("SE JUEGA UN TURNO")
-        print(f"Jug1: {self.mazo1}")
-        print(f"{self.botin1}")
-        print(f"Jug2: {self.mazo2}")
-        print(f"{self.botin2}")
+        # print("SE JUEGA UN TURNO")
+        # print(f"Jug1: {self.mazo1}")
+        # print(f"{self.botin1}")
+        # print(f"Jug2: {self.mazo2}")
+        # print(f"{self.botin2}")
         
         [carta_jug_1, carta_jug_2]=self.sacar_cartas()
+        self.mostrar_por_consola(carta_jug_1, carta_jug_2)
         if self.ganador is None:
             self.turnos_jugados += 1
         if (carta_jug_1 > carta_jug_2):
@@ -305,18 +316,65 @@ class JuegoGuerra:
             self.botin2.apilar(carta_jug_2)
         elif (carta_jug_2 == carta_jug_1 and carta_jug_2 != Carta(0, 'A')):
             self.guerra(carta_jug_1, carta_jug_2)
+        if self.turnos_jugados > 10000:
+            self.ganador="Empate"
+            self.empate=True
         
-        
-            
-    def mostrar_por_consola(self):
-        limpiar_consola()
+    def mostrar_guerra(self, carta_jug_1, carta_jug_2):
+        self.memoria_jug_1_guerra.append(carta_jug_1)
+        self.memoria_jug_2_guerra.append(carta_jug_2)
+        self.memoria_x+="-X-X-X-X-X-X"
+        linea_jug_1=""
+        linea_jug_2=""
+        for carta in self.memoria_jug_1_guerra:
+            linea_jug_1+="["
+            linea_jug_1+=str(carta.valor)
+            linea_jug_1+=carta.palo
+            linea_jug_1+="]"
+        for carta in self.memoria_jug_2_guerra:
+            linea_jug_2+="["
+            linea_jug_2+=str(carta.valor)
+            linea_jug_2+=carta.palo
+            linea_jug_2+="]"
+        print("***Guerra!!!***")
         print(f"Turno: {self.turnos_jugados}")
         print("Jugador 1: ")
-        for i in range(self.mazo1.tamanio()+self.botin1.tamanio()):
-            print(f"X-")
+        for i in range(int((self.mazo1.tamanio()+self.botin1.tamanio())/10)):
+            print(f"-X-X-X-X-X-X-X-X-X-X")
+        linea=""
+        for i in range ((self.mazo1.tamanio()+self.botin1.tamanio())%10):
+            linea+="-X"
+        print(linea)
         print(f"\n\n")
+        print(linea_jug_1, self.memoria_x, linea_jug_2)
+        print(f"\n\n")
+        print("Jugador 2: ")
+        for i in range(int((self.mazo2.tamanio()+self.botin2.tamanio())/10)):
+            print(f"-X-X-X-X-X-X-X-X-X-X")
+        linea=""
+        for i in range ((self.mazo2.tamanio()+self.botin2.tamanio())%10):
+            linea+="-X"
+        print(linea)
         
+    def mostrar_por_consola(self, carta_jug_1, carta_jug_2):
+        #limpiar_consola()
+        print(f"Turno: {self.turnos_jugados}")
+        print("Jugador 1: ")
+        for i in range(int((self.mazo1.tamanio()+self.botin1.tamanio())/10)):
+            print(f"-X-X-X-X-X-X-X-X-X-X")
+        linea=""
+        for i in range ((self.mazo1.tamanio()+self.botin1.tamanio())%10):
+            linea+="-X"
+        print(linea)
         print(f"\n\n")
-        for i in range(self.mazo2.tamanio+self.botin2.tamanio()):
-            print(f"X-")
+        print(f"{carta_jug_1} {carta_jug_2}")
+        print(f"\n\n")
+        print("Jugador 2: ")
+        for i in range(int((self.mazo2.tamanio()+self.botin2.tamanio())/10)):
+            print(f"-X-X-X-X-X-X-X-X-X-X")
+        linea=""
+        for i in range ((self.mazo2.tamanio()+self.botin2.tamanio())%10):
+            linea+="-X"
+        print(linea)
+
         #if (self.botin_de_guerra.esta_vacia() is False):
