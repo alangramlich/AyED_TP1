@@ -4,30 +4,30 @@ Created on Thu Apr 27 00:24:15 2023
 
 @author: Priscila
 """
-#comprueba que el archivo quedó ordenado
-import unittest
 
+from modulos import GeneradorArchivoOrdenado
+import unittest
+import os
+#Comprueba que el archivo quedó ordenado
 def esta_ordenada(archivo):
-    with open(archivo, 'r') as f:
-        datos = [int(x) for x in f.read().split(',')]
+    with open(archivo, 'r') as file:
+        datos = [int(x) for x in file.read().split(',')]
         return datos == sorted(datos)
 
 class TestOrden(unittest.TestCase):
 
     def test_archivo_ordenado(self):
-        self.assertTrue(esta_ordenada('datos.txt'))
+        self.assertTrue(esta_ordenada('datosPruebaOrdenados.txt'))
 
     def test_archivo_desordenado(self):
-        with open('datos.txt', 'a') as f:
+        with open('datosPruebaDesordenados.txt', 'a') as f:
             f.write(',5')
         self.assertFalse(esta_ordenada('datos.txt'))
 
-if __name__ == '__main__':
+if __name__ == 'datosPruebaOrdenados':
     unittest.main()
 
-#comprueba que ambos archivos, el original y el ordenado tienen el mismo tamaño
-import os
-import unittest
+#Comprueba que ambos archivos, el original y el ordenado tienen el mismo tamaño
 
 def mismo_tamano(archivo1, archivo2):
     return os.path.getsize(archivo1) == os.path.getsize(archivo2)
@@ -35,14 +35,11 @@ def mismo_tamano(archivo1, archivo2):
 class TestTamano(unittest.TestCase):
 
     def test_mismo_tamano(self):
-        self.assertTrue(mismo_tamano('datos.txt', 'datosOrdenados.txt'))
+        self.assertTrue(mismo_tamano('datosPruebaOrdenados.txt', 'datosPruebaDesordenados.txt'))
 
 
-if __name__ == '__main__':
+if __name__ == 'datosPruebaOrdenados':
     unittest.main()
-
-
-
 
 
 
