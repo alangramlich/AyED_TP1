@@ -6,8 +6,14 @@ Created on Sat Apr  8 17:09:18 2023
 """
 
 import sys
-sys.path.append("C:/REPOSITORIOS/Algoritmos-y-estructuras-de-datos/TP1PROBLEMA1")
-from modules.ListaDobleEnlazada import *
+import sys
+import os
+ruta_actual = os.getcwd()
+ruta_actual=ruta_actual[:-9]
+ruta_actual+="1\modules"
+sys.path.append(ruta_actual)
+from ListaDobleEnlazada import *
+from ListaDobleEnlazada import *
 
 class Pila:
     def __init__(self):

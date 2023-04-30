@@ -5,11 +5,10 @@ Created on Thu Mar 30 18:49:28 2023
 @author: alang
 """
 
-import sys
-sys.path.append("C:/REPOSITORIOS/Algoritmos-y-estructuras-de-datos/TP1PROBLEMA1")
+
 from modules.Pila import Pila
 import random
-from modules.ListaDobleEnlazada import ListaDobleEnlazada
+from ListaDobleEnlazada import ListaDobleEnlazada
 import os
 
 def limpiar_consola():
