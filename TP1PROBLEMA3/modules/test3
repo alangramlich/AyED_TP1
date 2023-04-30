@@ -1,45 +1,79 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Thu Apr 27 00:24:15 2023
 
 @author: Priscila
+
 """
-
-from modulos import GeneradorArchivoOrdenado
-import unittest
 import os
-#Comprueba que el archivo quedó ordenado
-def esta_ordenada(archivo):
-    with open(archivo, 'r') as file:
-        datos = [int(x) for x in file.read().split(',')]
-        return datos == sorted(datos)
+import unittest
 
-class TestOrden(unittest.TestCase):
-
-    def test_archivo_ordenado(self):
-        self.assertTrue(esta_ordenada('datosPruebaOrdenados.txt'))
-
-    def test_archivo_desordenado(self):
-        with open('datosPruebaDesordenados.txt', 'a') as f:
-            f.write(',5')
-        self.assertFalse(esta_ordenada('datos.txt'))
-
-if __name__ == 'datosPruebaOrdenados':
-    unittest.main()
-
-#Comprueba que ambos archivos, el original y el ordenado tienen el mismo tamaño
-
-def mismo_tamano(archivo1, archivo2):
+def misma_longitud(archivo1, archivo2):
     return os.path.getsize(archivo1) == os.path.getsize(archivo2)
 
-class TestTamano(unittest.TestCase):
+class TestLongitudArchivos(unittest.TestCase):
 
-    def test_mismo_tamano(self):
-        self.assertTrue(mismo_tamano('datosPruebaOrdenados.txt', 'datosPruebaDesordenados.txt'))
+    def test_misma_longitud(self):
+        """
+        Compruebo que el archivo generado con los 
+        datos ordenados sea de igual tamaño que el archivo
+        original
+       
+        """
+        self.assertTrue(misma_longitud('datosPruebaOrdenados.txt', 'datosPruebaDesordenados.txt'))
+        self.assertFalse(misma_longitud('datosOrdenados.txt', 'datosPruebaDesordenados.txt'))
 
-
-if __name__ == 'datosPruebaOrdenados':
+if __name__ == '__main__':
     unittest.main()
+
+def archivo_ordenado(archivo):
+    with open(archivo, 'r') as f:
+        contenido = f.readlines()
+    return contenido == sorted(contenido)
+
+class TestOrdenArchivos(unittest.TestCase):
+
+    def test_archivo_ordenado(self):
+        """
+        Compruebo que los datos de el archivo 
+        generado estén ordenados
+        
+        """
+        self.assertTrue(archivo_ordenado('datosPruebaOrdenados.txt'))
+        self.assertFalse(archivo_ordenado('datosPruebaDesordenados.txt'))
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
