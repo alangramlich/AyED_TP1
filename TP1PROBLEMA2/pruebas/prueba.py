@@ -6,7 +6,7 @@ Created on Sat Apr  8 17:55:39 2023
 """
 from modules.JuegoGuerra import JuegoGuerra
 from modules.JuegoGuerra import Carta
-from modules.JuegoGuerra import Pila
+
 
 # carta1=Carta('9','pica')
 # carta2=Carta('A','corazon')

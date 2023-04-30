@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Mar 24 20:23:51 2023
-
-@author: alang
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Mon Mar 20 10:18:01 2023
 
 @author: alang
 """
+
 class Nodo:
+    """
+    Clase que representa un nodo de una lista doblemente enlazada.
+
+    Atributos:
+    ----------
+    dato :  El dato almacenado en el nodo.
+    siguiente : El siguiente nodo.
+    anterior : El nodo anterior.
+    
+    """
     def __init__(self, dato=None, siguiente=None, anterior=None):
         self.dato = dato
         self.siguiente = siguiente
@@ -33,13 +37,45 @@ class Nodo:
         linea=str(self.dato)
         return linea
 
+
+
 class ListaDobleEnlazada:
+    """
+    Clase que representa una lista doblemente enlazada.
+    """
     def __init__(self):
+        """
+        Constructor de la clase ListaDobleEnlazada.
+
+        Args:
+        - No recibe argumentos.
+        
+        Returns:
+        - No retorna valores
+        
+        Descripción:
+        - Inicializa los atributos cabeza, cola y tamanio.
+        """
         self.cabeza = None
         self.cola = None
         self.tamanio = 0
+        
     def esta_vacia(self):
+        """
+        Método que determina si la lista está vacía.Comprueba si el tamanio es 
+        igual a 0. Si es así, devuelve True, indicando que la lista está vacía
+        y en caso contrario, devuelve False.
+    
+        Args:
+        - No recibe argumentos.
+
+        Returns:
+        - bool: devuelve True si la lista está vacía, False en caso contrario.
+
+        """
         return self.tamanio == 0
+    
+    
     def tamanio(self):
         return self.tamanio
     
@@ -50,6 +86,13 @@ class ListaDobleEnlazada:
         #desp enlazo el ahora segundo al nuevo cabeza 
         #enlazo el nuevo al inicio 
     def agregar_al_inicio(self, dato):
+        """
+        Método que agrega un elemento al inicio de la lista.
+
+        Args:
+        - dato: Dato a agregar en la lista.
+
+        """
         nuevo = Nodo(dato, self.cabeza, None)
         if self.cabeza != None:
             self.cabeza.anterior = nuevo
@@ -62,6 +105,13 @@ class ListaDobleEnlazada:
 
         
     def agregar_al_final(self, dato):
+        """
+        Método que agrega un elemento al final de la lista.
+
+        Args:
+        - dato: Dato a agregar en la lista.
+
+        """
         nuevo = Nodo(dato, None, self.cola)
         if self.cola != None:
             self.cola.siguiente = nuevo
@@ -82,6 +132,16 @@ class ListaDobleEnlazada:
         #COMO LO ENLAZO: 
         
     def insertar(self,dato, posicion=None):
+        """
+        Inserta un nuevo nodo en la posición indicada.
+        Si no se especifica la posición, se agrega al final de la lista. Si la
+        posición es 0, se agrega al inicio de la lista. 
+
+        Args:
+        dato: Es el dato que se va a almacenar en el nuevo nodo.
+        posicion: Es la posición en la que se va a insertar el nuevo nodo.
+
+        """
         if posicion == None:
             self.agregar_al_final(dato)
         elif posicion == 0:
@@ -102,6 +162,17 @@ class ListaDobleEnlazada:
     #tengo que posicionarme en el que quiero borrar y desde ahi cambiar los enlaces
     #hacia adelante y hacia atras
     def extraer(self, posicion=None):
+        """
+        Extrae el nodo eque se encuentre en la posición indicada.
+        Si no se especifica la posición, se extrae el último nodo de la lista. 
+
+        Args:
+        posicion: Es la posición de la que se va a extraer el nodo.
+        
+        Returns:
+            nodoAExtraer: nodo extraído    
+
+        """
         retornar = None
         if posicion == None:
             if self.tamanio>1:
@@ -157,6 +228,16 @@ class ListaDobleEnlazada:
                 
         
     def copiar(self):
+        """
+        Retorna una copia de la lista enlazada actual, creando una nueva 
+        instancia de ListaDobleEnlazada. 
+        
+        Returns
+        -------
+            listaCopia: una nueva instancia de ListaDobleEnlazada 
+            que es una copia de la lista original.   
+
+        """
         copia=ListaDobleEnlazada()
         actual=self.cabeza
         if actual == None:
@@ -173,6 +254,16 @@ class ListaDobleEnlazada:
         
         
     def invertir(self):
+        """
+        Invierte la lista doblemente enlazada.
+        Se trabaja con tres nodos auxiliares, invirtiendo los enlaces de cada 
+        nodo. 
+
+        Returns
+        -------
+        None.
+
+        """
         aux0=self.cabeza
         aux1=self.cabeza.siguiente
         aux2=self.cabeza.siguiente.siguiente
@@ -196,50 +287,67 @@ class ListaDobleEnlazada:
         aux=self.cola
         self.cola=self.cabeza
         self.cabeza=aux
-        
-    # def ordenar(self):
-    #     if self.tamanio<2:
-    #         return
-    #     actual = self.cabeza
-    #     while actual is not None:
-    #         aux = actual.siguiente
-    #         while aux is not None:
-    #             if aux.dato < actual.dato:
-    #                 aux1=actual.dato
-    #                 actual.dato = aux.dato
-    #                 aux.dato=aux1
-    #                 aux = aux.siguiente
-    #             else:
-    #                 aux=aux.siguiente
-                
-    #         actual=actual.siguiente
+
     
-    def ordenar(self):    #ACA CREO QUE LO HICE POR INSERCION
-        for i in range(self.tamanio):
-            aux=self.extraer(i)
-            j=0
-            nodo=self.cabeza
-            while j<=i:
-                if(aux<nodo.dato):
-                    self.insertar(aux,j)
-                    j=i+1
-                elif j==i:
-                    self.insertar(aux,j)
-                    j+=1
-                else:
-                    nodo=nodo.siguiente
-                    j+=1
-                    
+    def ordenar(self):   
+        """
+        Ordena los elementos de la lista en orden ascendente utilizando el 
+        algoritmo de ordenamiento por inserción.
+
+        Returns
+        -------
+        None.
+
+        """    
+        if (self.tamanio>3):
+            for i in range(self.tamanio):
+                aux=self.extraer(i)
+                j=0
+                nodo=self.cabeza
+                while j<=i:
+                    if j==i:
+                        self.insertar(aux,j)
+                        j+=1
+                    elif(aux<nodo.dato):
+                        self.insertar(aux,j)
+                        j=i+1
+
+                    else:
+                        nodo=nodo.siguiente
+                        j+=1
+        elif(self.tamanio == 2):
+            if (self.cabeza.dato>self.cola.dato):
+                aux=self.cabeza.dato
+                self.cabeza.dato=self.cola.dato
+                self.cola.dato=aux
+        elif(self.tamanio == 3):
+            tercero=self.extraer(0)
+            self.ordenar()
+            if(tercero>=self.cabeza.dato and tercero<self.cola.dato):
+                self.insertar(tercero, 1)
+            elif (tercero>=self.cola.dato):
+                self.agregar_al_final(tercero)
+            elif (tercero<self.cabeza.dato):
+                self.agregar_al_inicio(tercero)
                         
                     
                         
                 
         
     def add(self,Lista):
-        #PREGUNTA: ESTO FUNCIONA??
-        #Lista.cabeza.anterior=self.cola
-        #self.cola.siguiente=Lista.cabeza
-        #OPCION 2
+        """
+        Se crea esta funcion para concatenar dos listas doblemente enlazadas.
+        Esta funcion es llamada dentro del operador __add__.
+
+        Parameters
+        ----------
+        Lista : lista doblemente enlazada.
+
+        Returns
+        -------
+        listaConcatenada 
+
+        """
         concatenada=ListaDobleEnlazada()
         aux=self.cabeza
         while aux != None:
@@ -252,6 +360,20 @@ class ListaDobleEnlazada:
         return concatenada
 
     def concatenar(self,Lista):
+        """
+        Toma como parámetro otra lista doblemente enlazada llamada Lista y 
+        agrega los nodos de esta lista al final de la lista actual.
+        
+        Parameters
+        ----------
+        Lista : lista doblemente enlazada que se desea concatenar a la 
+        lista actual.
+
+        Returns
+        -------
+        None.
+
+        """
         aux=Lista.cabeza
         while aux != None:
             self.agregar_al_final(aux.dato)
@@ -260,19 +382,55 @@ class ListaDobleEnlazada:
   #ListaSuma = MiLista1 + MiLista2
 
     def __add__(self, otro): #SOBRECARGA EL +
+        """
+        Sobrecarga el operador + para que dos objetos de la clase 
+        ListaDobleEnlazada puedan concatenarse usando el operador +.
+
+        Parameters
+        ----------
+        otro : objeto de la clase ListaDobleEnlazada que se va a
+        concatenar con el objeto actual.
+
+        Returns
+        -------
+        ListaDobleEnlazada: nuevo objeto de la clase ListaDobleEnlazada 
+        que es la concatenación del objeto actual y el objeto otro.
+        """
+
         return self.add(otro)
 
     def __str__(self):
-       linea="None "
-       for i in self:
-           #linea=linea+print(dato) ESTO NO ANDA PORQUE PRINT NO ME DEVUELVE UN STRING
-           #PRINT SOLO MUESTRA POR PANTALLA Y DEVUELVE NONETYPE
-           linea=linea+str(i)+" "
-       linea=linea+"None"
-       return linea
+        """
+        Devuelve una cadena de caracteres que representa la lista doblemente 
+        enlazada.     
+
+        Returns
+        -------
+        linea 
+
+        """
+        linea="None "
+        for i in self:
+            #linea=linea+print(dato) ESTO NO ANDA PORQUE PRINT NO ME DEVUELVE UN STRING
+            #PRINT SOLO MUESTRA POR PANTALLA Y DEVUELVE NONETYPE
+            linea=linea+str(i)+" "
+        linea=linea+"None"
+        return linea
 
 
     def __iter__(self):
+        """
+        Método que permite la iteración de los elementos de la lista.
+
+        Args:
+        - No recibe argumentos.
+
+        Returns:
+        - Yield: Retorna los valores de los nodos de la lista.
+
+        Descripción:
+        - Recorre la lista y retorna los valores de los nodos a medida que los encuentra.
+        """
         actual=self.cabeza
         while actual is not None: 
             yield actual.dato
@@ -280,4 +438,10 @@ class ListaDobleEnlazada:
         
         
     def __len__(self):
+        """Devuelve el tamaño de la lista.
+
+        Returns:
+            int: Tamaño del objeto.
+            
+        """
         return self.tamanio

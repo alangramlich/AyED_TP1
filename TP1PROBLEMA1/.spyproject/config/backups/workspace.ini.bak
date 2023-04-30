@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['modules\\Nodo.py', 'modules\\ListaDobleEnlazada.py', 'pruebas\\Prueba.py', 'pruebas\\test.py']
+recent_files = ['modules\\ListaDobleEnlazada.py', '..\\..\\..\\entrega\\AyED_TP1\\TP1PROBLEMA1\\modules\\ListaDobleEnlazada.py', '..\\..\\..\\entrega\\AyED_TP1\\TP1PROBLEMA1\\modules\\Nodo.py', 'pruebas\\test.py']
 
 [main]
 version = 0.2.0

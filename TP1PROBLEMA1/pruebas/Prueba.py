@@ -7,16 +7,16 @@ Created on Mon Mar 20 13:41:37 2023
 from modules.ListaDobleEnlazada import ListaDobleEnlazada
 from modules.Nodo import Nodo
 
-lista=ListaDobleEnlazada()
-lista.agregar_al_final(1)
-lista.agregar_al_final(2)
-lista.agregar_al_final(3)
-lista.agregar_al_final(4)
-lista.agregar_al_final(5)
-lista.agregar_al_final(6)
-print(lista)
+# lista=ListaDobleEnlazada()
+# lista.agregar_al_final(1)
+# lista.agregar_al_final(2)
+# lista.agregar_al_final(3)
+# lista.agregar_al_final(4)
+# lista.agregar_al_final(5)
+# lista.agregar_al_final(6)
+# print(lista)
 
-print(f"Longitud: {len(lista)}")
+# print(f"Longitud: {len(lista)}")
 
 #----------------------PRUEBA DE CONCATENAR
 # print("PRUEBA DE CONCATENAR: ")
@@ -38,32 +38,21 @@ print(f"Longitud: {len(lista)}")
 # lista.insertar(10,3)
 # print(lista)
 
-print("PRUEBA DE EXTRAER: ")
-print(lista)
-lista.extraer(-1)
-print(lista)
+# print("PRUEBA DE EXTRAER: ")
+# print(lista)
+# lista.extraer(-1)
+# print(lista)
 
-print("PRUEBA DE INVERTIR: ")
-lista.invertir()
-print(lista)
+# print("PRUEBA DE INVERTIR: ")
+# lista.invertir()
+# print(lista)
 
 
 print("PRUEBA DE ORDENAR: ")
+lista = [8, 6, 5, 1, 2, 0, 4, 7, 3, 9]
 lista_ord=ListaDobleEnlazada()
-lista_ord.agregar_al_inicio(4)
-lista_ord.agregar_al_inicio(0)
-lista_ord.agregar_al_inicio(3)
-lista_ord.agregar_al_inicio(2)
-lista_ord.agregar_al_inicio(4)
-lista_ord.agregar_al_inicio(1)
-lista_ord.agregar_al_inicio(-1)
-lista_ord.agregar_al_inicio(-1)
-lista_ord.agregar_al_inicio(-4)
-lista_ord.agregar_al_inicio(-7)
-lista_ord.agregar_al_inicio(4)
-lista_ord.agregar_al_inicio(2)
-lista_ord.agregar_al_inicio(5)
-lista_ord.agregar_al_inicio(0)
+for i in range(len(lista)):
+    lista_ord.agregar_al_final(lista[i])
 print("Lista original: ")
 print(lista_ord)
 lista_ord.ordenar()
