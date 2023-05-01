@@ -11,6 +11,64 @@ import random
 import os
 import math
 
+
+def ordenamiento_inicial(archivo_entrada, archivo_salida1, archivo_salida2, cant_datos):
+    """
+    Ordena el primer bloque de claves, esta funcion carga en memoria cant_datos
+    y los ordena utilizando una lista de python. Luego, escribe alternadamente
+    los datos ordenados en los archivos de salida.
+
+    Parameters
+    ----------
+    nombre : es el nombre que se le dará al archivo que va a generarse.
+
+    Returns
+    -------
+    None.
+
+    """
+    with open(archivo_entrada, 'r') as entrada, \
+         open(archivo_salida1, 'w') as salida1, \
+         open(archivo_salida2, 'w') as salida2:
+             linea_salida1 = []
+             linea_salida2 = []
+             for i in range(cant_datos):
+                 linea = entrada.readline()
+                 if not linea:
+                     break  # fin del archivo
+                 if (linea.strip()):
+                     linea_salida1.append(linea)
+             # alternar entre salida1 y salida2 y escribir cant_datos líneas en cada uno
+             linea_salida1.sort()
+             for k in range(len(linea_salida1)):
+                 salida1.write(linea_salida1[k])
+             linea_salida1=[]
+             destino = linea_salida2
+             contador_lineas = 0
+             for linea in entrada:
+                 if (linea.strip()):
+                     destino.append(linea)
+                 contador_lineas += 1
+                 if contador_lineas == cant_datos:
+                     destino.sort()
+                     for k in range(len(destino)):
+                         if destino == linea_salida1:
+                             salida1.write(destino[k])
+                         elif destino == linea_salida2:
+                             salida2.write(destino[k])
+                     if destino == linea_salida1:
+                         linea_salida1 = []
+                         destino = linea_salida2
+                     elif destino == linea_salida2:
+                         linea_salida2 = []
+                         destino = linea_salida1
+                     contador_lineas = 0
+             for dato in linea_salida1:
+                 salida1.write(dato)
+             for dato in linea_salida2:
+                 salida2.write(dato)
+            
+
 def escribir_numeros_aleatorios(nombre_archivo, cant_megas):
     """
     Genera un archivo de datos con números aleatorios de una determinada 
@@ -29,7 +87,7 @@ def escribir_numeros_aleatorios(nombre_archivo, cant_megas):
     tamano_actual = 0
     with open(nombre_archivo, 'w') as f:
         while tamano_actual < tamano_deseado:
-            numero = random.randint(10**19, 10**20 - 1)  # Número aleatorio de 20 cifras
+            numero = random.randint(10**3, 10**4 - 1)  # Número aleatorio de 20 cifras
             f.write(str(numero) + '\n')  # Escribir el número en el archivo
             tamano_actual = os.stat(nombre_archivo).st_size  # Obtener el tamaño actual del archivo
 
@@ -202,8 +260,15 @@ def ordenar(archivo):
 
     """
     cantidad_datos=contar_lineas_archivo(archivo)
-    for ronda in range(int(math.log2(cantidad_datos)+1)):
-        dividir_archivo(archivo, "salida1.txt", "salida2.txt", int(math.pow(2, ronda)))
-        unir_archivo("salida1.txt", "salida2.txt", archivo, int(math.pow(2, ronda)))
+    # for ronda in range(int(math.log2(cantidad_datos)+1)):
+    #     dividir_archivo(archivo, "salida1.txt", "salida2.txt", int(math.pow(2, ronda)))
+    #     unir_archivo("salida1.txt", "salida2.txt", archivo, int(math.pow(2, ronda)))
+        
+    ordenamiento_inicial(archivo, "salida1.txt", "salida2.txt", 10)
+    unir_archivo("salida1.txt", "salida2.txt", archivo, 10)
+    for ronda in range(int(math.log2(cantidad_datos/10)+1)):
+        dividir_archivo(archivo, "salida1.txt", "salida2.txt", int(math.pow(2, ronda)*10))
+        #print(f"Divido en long: {int(math.pow(2, ronda)*10)}")
+        unir_archivo("salida1.txt", "salida2.txt", archivo, int(math.pow(2, ronda)*10))
 
 

@@ -18,19 +18,19 @@ class TestOrdenamientoExterno(unittest.TestCase):
         Creo una lista de mil elementos, los guardo en un archivo
         los ordeno y luego compruebo que esten en orden
         """
-        lista1 = [random.randint(1, 100) for _ in range(1000)]
-        
-        with open('datos_test_1.txt', 'w') as archivo:
-            for elemento in lista1:
-                archivo.write(str(elemento) + '\n')
-        lista1.sort()
-        ordenar('datos_test_1.txt')
-        lista2=[]
-        with open('datos_test_1.txt', 'r') as f:
+        escribir_numeros_aleatorios("datos.txt", 0.1)
+        lista1 = []
+        with open("datos.txt", 'r') as f:
             for linea in f:
-                linea.strip()
-                lista2.append(int(linea))
-        self.assertEqual(lista1, lista2)
+                lista1.append(linea)
+        lista1.sort()
+        ordenar("datos.txt")
+
+        lista2 = []
+        with open("datos.txt", 'r') as f:
+            for linea in f:
+                lista2.append(linea)
+        self.assertEqual(lista1==lista2, True)
 
 
 
